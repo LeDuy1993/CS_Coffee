@@ -28,9 +28,9 @@ namespace CS_Coffee
         {
             Configuration = configuration;
         }
-
+        //an update2
         public IConfiguration Configuration { get; }
-
+        // Ân Ngáo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -55,8 +55,11 @@ namespace CS_Coffee
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            // andasd
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
