@@ -1,0 +1,30 @@
+﻿@model EditRoleViewModel
+@{
+    ViewBag.Title = "Edit Role";
+    Layout = "_Layout1";
+}
+
+    <div class="col-sm-6 container pb-5 pt-3 " style="background-image: url('/images/bia4.jpg'); border-radius:5px;">
+        <h3 class="pl-5 text-white"> @ViewBag.Title</h3>
+        <hr />
+        <form  class="pl-5 text-white" enctype="multipart/form-data" asp-controller="Role" asp-action="Edit" method="post">
+            <div asp-validation-summary="All" class="text-danger">
+                <input hidden asp-for="RoleId">
+            </div>
+            <div class="row form-group" style="width:75%">
+
+                <div class="col-sm-3">
+                    <label asp-for="RoleName" class="font-italic"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="RoleName" class="form-control">
+                    <span asp-validation-for="RoleName" class=" text-danger"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a class="btn btn-danger" asp-controller="Role" asp-action="Index">Back</a>
+        </form>
+    </div>
+
+

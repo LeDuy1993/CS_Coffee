@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CS_Coffee.DashboardViewModels.DashboardViewModel>
+@{
+    ViewBag.Title = "DashBoard";
+    var sum = ViewBag.Total;
+    Layout = "_LayoutDashBoard";
+    var count = 1;
+}
+
+<div class="container-fluid">
+
+    <section class="resume-section align-items-center" id="about">
+        <div class="w-100">
+            <h2 class="mb-0">
+                <span class="text-primary">Coffee</span>
+            </h2>
+            <div class="subheading mb-5">
+                27 Nguyễn Tri Phương, Huế, Việt Nam - <i class=" icon-phone"></i> (036) 345-7343 ·
+                <a href="mailto:name@email.com">Leduyjapan1993@email.com</a>
+            </div>
+        </div>
+        <h3>
+            Total Revenue : @sum.ToString("#,##0") VNĐ
+        </h3>
+        <form action="/action_page.php">
+            <label for="birthdaytime">DateTime:</label>
+            <input type="datetime-local" id="time" name="birthdaytime">
+            <input type="submit">
+        </form>
+        <table id="dtBasicExample" class="table table-striped table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Stt</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Count</th>
+                    <th>Total</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var view in Model)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@view.ProductName</td>
+                        <td>@view.Price.ToString("#,##0")</td>
+                        <td>@view.Count</td>
+                        <td>@view.Total.ToString("#,##0") VNĐ</td>
+                        <th>@view.EndTime</th>
+                    </tr>
+                    count = count + 1;
+                }
+            </tbody>
+        </table>
+    </section>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200702071122_Add_PRoductOrderDetail.cs" />
+    <Compile Remove="Migrations\20200702071122_Add_PRoductOrderDetail.Designer.cs" />
+    <Compile Remove="Migrations\20200702150300_addProduct_colType.cs" />
+    <Compile Remove="Migrations\20200702150300_addProduct_colType.Designer.cs" />
+    <Compile Remove="Migrations\20200702151322_addProduct_colProductType.cs" />
+    <Compile Remove="Migrations\20200702151322_addProduct_colProductType.Designer.cs" />
+    <Compile Remove="Migrations\20200703043103_Add_ProductType.cs" />
+    <Compile Remove="Migrations\20200703043103_Add_ProductType.Designer.cs" />
+    <Compile Remove="Migrations\20200703045427_add_ProductType.cs" />
+    <Compile Remove="Migrations\20200703045427_add_ProductType.Designer.cs" />
+    <Compile Remove="Migrations\20200703062856_Add_ProducType.cs" />
+    <Compile Remove="Migrations\20200703062856_Add_ProducType.Designer.cs" />
+    <Compile Remove="Migrations\20200703063717_Add_ProducType.cs" />
+    <Compile Remove="Migrations\20200703063717_Add_ProducType.Designer.cs" />
+    <Compile Remove="Migrations\20200703063932_Add_ProducType.cs" />
+    <Compile Remove="Migrations\20200703063932_Add_ProducType.Designer.cs" />
+    <Compile Remove="Migrations\20200703064509_Add_ProducType.cs" />
+    <Compile Remove="Migrations\20200703064509_Add_ProducType.Designer.cs" />
+    <Compile Remove="Migrations\20200703072346_Add_ProducType.cs" />
+    <Compile Remove="Migrations\20200703072346_Add_ProducType.Designer.cs" />
+    <Compile Remove="Migrations\20200703073424_Add_ProducType.cs" />
+    <Compile Remove="Migrations\20200703073424_Add_ProducType.Designer.cs" />
+    <Compile Remove="Migrations\20200703073722_Add_ProducType2.cs" />
+    <Compile Remove="Migrations\20200703073722_Add_ProducType2.Designer.cs" />
+    <Compile Remove="Migrations\20200703073824_Add_ProducType2.cs" />
+    <Compile Remove="Migrations\20200703073824_Add_ProducType2.Designer.cs" />
+    <Compile Remove="Migrations\20200706043333_UpdateProductOrderDeltailId.cs" />
+    <Compile Remove="Migrations\20200706043333_UpdateProductOrderDeltailId.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

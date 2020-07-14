@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<ProductIndexViewModel>
+@{
+    Layout = "_LayoutDashBoard";
+    ViewBag.Title = "Product list";
+    var types = ViewBag.ProductTypes as List<ProductType>;
+    var count = 1;
+}
+<div class="container-fluid ">
+    <a asp-controller="Product" asp-action="Create" class="btn btn-warning mb-2"> Create Product <i class="fa fa-plus"></i></a>
+    <table id="dtBasicExample" class="table table-striped table-hover table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Stt</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var product in Model)
+                {
+                    var avatarPath = $"/images/{(product.AvatarPath ?? "nonavatar.png")}";
+                    <tr>
+                        <td>@count</td>
+                        <td><b>@product.Name</b></td>
+                        <td>
+                            @product.TypeName
+                        </td>
+                        <td>@product.Price.ToString("#,##0")</td>
+                        <td> <img style="width:75px;height:75px" src="@avatarPath" class="card-img-top myImage" asp-append-version="true" /></td>
+                        <td class="text-center ">
+                            <a class="btn btn-warning" asp-controller="Product" asp-action="Edit" asp-route-id="@product.ProductId"><i class="fa fa-edit" style="font-size:24px;"></i></a>
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash-o" style="font-size:24px"></i></button>
+                            @*Modal View Delete Product*@
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header ">
+                                            <a class="navbar-brand " asp-area="" asp-controller="Product" asp-action="Index">CS_Coffee</a>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-header">
+                                           
+                                            <h6> Delete this product : @product.Name</h6>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.ProductId" class=" btn btn-warning">Yes</a>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    count = count + 1;
+                }
+            }
+
+        </tbody>
+
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

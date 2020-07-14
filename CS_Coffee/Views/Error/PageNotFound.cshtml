@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "The page does not exist";
+}
+
+    <div class="alert alert-danger mt-2">
+        <h1>
+            @ViewBag.ErrorMessage
+        </h1>
+        <hr />
+        <h4>Page not found</h4>
+        <h5>Please contact administator Leduyjapan1993@gmail.com </h5>
+    </div>
+<a asp-controller="Home" asp-action="Index" class="btn btn-outline-warning" style="width:auto">
+    Click here to navigate home page
+</a>

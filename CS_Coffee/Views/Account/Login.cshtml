@@ -1,0 +1,53 @@
+﻿
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login Employee";
+    Layout = "_Layout1";
+}
+    <div class="col-sm-6 container pb-5 pt-3 " style="background-image: url('/images/bia4.jpg'); border-radius:5px;">
+        <h2  class="text-white pl-5 ">Login</h2>
+        <hr />
+        <form class="pl-5 text-white" enctype="multipart/form-data" asp-controller="Account" asp-action="Login" method="post">
+            <input hidden asp-for="ReturnUrl" value="@ViewBag.ReturnUrl" />
+            <div class="row form-group" style="width:75%">
+
+                <div class="col-sm-3">
+                    <label asp-for="Email" class="font-weight-bold"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="Email" class="form-control">
+                    <span asp-validation-for="Email" class=" text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-group" style="width:75%">
+
+                <div class="col-sm-3">
+                    <label asp-for="Password" class="font-weight-bold"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="Password" class="form-control">
+                    <span asp-validation-for="Password" class=" text-danger"></span>
+                </div>
+            </div>
+            <div class="row form-group" style="width:75%">
+                <div class="col-sm-3">
+                    &nbsp;
+                </div>
+                <div class="col-sm-9">
+                    <label class="form-check-label ">
+                        <input type="checkbox" asp-for="RemenberMe"> Remember me
+                    </label>
+                </div>
+            </div>
+            <div class="row form-group" style="width:75%">
+                <div class="col-sm-3">
+                    &nbsp;
+                </div>
+                <div  class="col-sm-9 text-danger" asp-validation-summary="All">
+
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a class="btn btn-danger" asp-controller="Home" asp-action="Index">Back</a>
+        </form>
+    </div>

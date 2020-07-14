@@ -1,0 +1,258 @@
+﻿
+@model IEnumerable<OrderViewModel>
+@{
+    ViewBag.Title = "Product list";
+    var count = 0;
+    var countTable = 0;
+    var tables = ViewBag.Orders as List<Order>;
+    var producs = ViewBag.Products as List<Product>;
+    var sum = ViewBag.Sum;
+    var selectedTable = ViewBag.TableID != null ? int.Parse(ViewBag.TableID.ToString()) : 0;
+    var orderUse = ViewBag.OrderUse;
+    var productTypes = ViewBag.Types;
+    var productTypeId = ViewBag.ProductTypeID;
+    var startTime = ViewBag.StartTime;
+}
+    <div class="container">
+        <h3 class="text-dark">Tables </h3>
+        <hr class="bg-dark">
+        <div class="row container">
+            @foreach (var table in tables)
+            {
+                countTable = countTable + 1;
+
+                @if (@table.Using)
+                {
+                    <div class="card border border-dark  ml-3 mt-3 mb-3 " style="border-radius:2px;">
+                        <div style="background-color:forestgreen" class="card border border-dark">
+                            <img class="card-img-top" style="width:75px;height:75px" src="/images/ban2.jpg" />
+                            <a asp-controller="Home" asp-action="Index" asp-route-id="@table.OrderId"
+                               class="align-self-center btn btn-block text-white font-weight-bold">
+                                @table.OrderId
+                            </a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="border border-dark  ml-3 mt-3 mb-3" style="border-radius:2px;">
+                        <div style="background-color:red" class="card border border-dark">
+                            <img class="card-img-top" style="width:75px;height:75px" src="/images/table1.png" />
+                            <a asp-controller="Home" asp-action="Index" asp-route-id="@table.OrderId"
+                               class="align-self-center btn btn-block text-white font-weight-bold">
+                                @table.OrderId
+                            </a>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+        <hr class="bg-dark">
+        <div class="row first">
+
+            <div class="col-sm-5 mr-4">
+                <h3 class="text-dark my-2 ml-2">Table @selectedTable - Start time: @startTime</h3>
+                <table class="table table-dark">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Serial</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Count</th>
+                            <th>Total</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var order in Model)
+                            {
+                                count = count + 1;
+                                <tr class="bg-dark">
+                                    <td class="text-white">@count</td>
+                                    <td class="text-white">@order.Name</td>
+                                    <td class="text-white">@order.Price.ToString("#,##0")</td>
+                                    <td class="text-white">@order.Count</td>
+                                    <td class="text-white">@order.Total.ToString("#,##0")</td>
+                                    <td class="text-center">
+                                        <a asp-controller="Home" asp-action="Edit" asp-route-id="@order.PodId"><i class="fa fa-edit text-warning"></i></a>
+                                        <a asp-controller="Home" asp-action="Delete" asp-route-pid="@selectedTable" asp-route-id="@order.PodId"><i class="fa fa-trash text-danger ml-2"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                            <tr class="bg-dark">
+                                <td class="text-white">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalBill">
+                                        Bill <i class="fa fa-money"></i>
+                                    </button>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-white">
+                                    @sum.ToString("#,##0")
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">
+                                        Change <i class="fa fa-share-square-o"></i>
+                                    </button>
+                                    <div class="modal fade" id="myModal">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header ">
+                                                    <a class="navbar-brand pl-5 " asp-area="" asp-controller="Product" asp-action="Index">CS_Coffee</a>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-header">
+                                                    <div class="row container pl-5">
+                                                        @foreach (var table in tables)
+                                                        {
+                                                            countTable = countTable + 1;
+
+                                                            @if (@table.Using)
+                                                            {
+                                                                <div>
+                                                                    <div style="background-color:green" class="card ml-3 mt-3 mb-3 border-white">
+                                                                        <img class="card-img-top" style="width:75px;height:75px" src="/images/ban2.jpg" />
+                                                                        <a asp-controller="Home" asp-action="Change" asp-route-id="@selectedTable" asp-route-pid="@table.OrderId"
+                                                                           class="align-self-center btn text-white font-weight-bold">
+                                                                            @table.OrderId
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                <div>
+                                                                    <div style="background-color:red" class="card ml-3 mt-3 mb-3 border-white">
+                                                                        <img class="card-img-top" style="width:75px;height:75px" src="/images/table1.png" />
+                                                                        <a asp-controller="Home" asp-action="Change" asp-route-id="@selectedTable" asp-route-pid="@table.OrderId"
+                                                                           class="align-self-center btn text-white font-weight-bold">
+                                                                            @table.OrderId
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-sm-6 ml-4">
+                <div class="row container mt-2">
+                    <div class="ml-2 mr-4 col-5">
+                        <h3 class="text-dark">Products</h3>
+                    </div>
+                    <div class="ml-4 col-5">
+                        <input class="form-control  border border-dark" id="myInput" type="text" placeholder="Search Product..">
+                    </div>
+                </div>
+                <div class="row container btn-group mt-2 ">
+                    <a class="btn btn-dark text-white ml-2"
+                       asp-controller="Home" asp-action="Index"
+                       asp-route-id="@selectedTable"
+                       asp-route-pid="0">
+
+                        All
+                    </a>
+                    @foreach (var type in productTypes)
+                    {
+                        <a class="btn btn-dark text-white ml-1"
+                           asp-controller="Home" asp-action="Index"
+                           asp-route-id="@selectedTable"
+                           asp-route-pid="@type.ProductTypeId">
+
+                            @type.TypeName
+                        </a>
+                    }
+                </div>
+                <div class="row container ml-4" id="search">
+                    @if (productTypeId == 0)
+                    {
+                        @foreach (var product in producs)
+                        {
+                            <div class="border border-dark  ml-2 mt-2  ">
+                                <div style="background-image: url('/images/bia4.jpg');" class="card">
+                                    <img class="card-img-top" style="width:75px;height:75px" src="/images/@product.AvatarPath" />
+                                    <a asp-controller="Home" asp-action="Order"
+                                       asp-route-id="@selectedTable"
+                                       asp-route-pid="@product.ProductId"
+                                       class="align-self-center btn btn-block text-white font-weight-normal">
+                                        @product.Name
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        @foreach (var product in producs)
+                        {
+                            if (productTypeId == product.ProductTypeId)
+                            {
+                                <div class="border border-dark  ml-2 mt-2  ">
+                                    <input hidden="@product.ProductTypeId" />
+                                    <div style="background-image: url('/images/bia4.jpg');" class="card">
+                                        <img class="card-img-top" style="width:75px;height:75px" src="/images/@product.AvatarPath" />
+                                        <a asp-controller="Home" asp-action="Order"
+                                           asp-route-id="@selectedTable"
+                                           asp-route-pid="@product.ProductId"
+                                           class="align-self-center rounded-circle btn btn-block text-white font-weight-normal">
+                                            @product.Name
+                                        </a>
+
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        @*Modal View Bill*@
+        <div class="modal" id="myModalBill">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <a class="navbar-brand " asp-area="" asp-controller="Home" asp-action="Index">CS_Coffee</a>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h4> Pay the table @selectedTable</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <a asp-controller="Home" asp-action="Bill" asp-route-id="@selectedTable" class=" btn btn-warning">Yes</a>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#search div").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}
+

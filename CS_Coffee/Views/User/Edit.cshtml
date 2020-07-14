@@ -1,0 +1,71 @@
+﻿@model UserEditViewModel
+@{
+    ViewBag.Title = "Edit User";
+    Layout = "_Layout1";
+    var roles = ViewBag.Roles as IQueryable<IdentityRole>;
+}
+    <div class="col-sm-10 container pb-5 pt-3 border border-dark"   style="border-radius:5px;">
+        <h2  class="pl-5 text-dark">Edit User</h2>
+        <hr />
+        <form  class="pl-5 text-dark" enctype="multipart/form-data" asp-controller="User" asp-action="Edit" method="post">
+            <input hidden asp-for="UserId" />
+            <div class="row form-group" style="width:75%">
+
+                <div class="col-sm-3">
+                    <label asp-for="Email" class="font-weight-bold"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="Email" class="form-control">
+                    <span asp-validation-for="Email" class=" text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row form-group" style="width:75%">
+                <div class="col-sm-3">
+                    <label asp-for="City" class="font-weight-bold"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="City" class="form-control">
+
+                </div>
+            </div>
+            <div class="row form-group" style="width:75%">
+                <div class="col-sm-3">
+                    <label asp-for="Address" class="font-weight-bold"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="Address" class="form-control">
+
+                </div>
+            </div>
+            <div class="row form-group" style="width:75%">
+                <div class="col-sm-3">
+                    <label asp-for="PhoneNumber" class="font-weight-bold"></label>
+                </div>
+                <div class="col-sm-9">
+                    <input asp-for="PhoneNumber" class="form-control">
+
+                </div>
+            </div>
+            <div class="row form-group" style="width:75%">
+                <div class="col-sm-3">
+                    <label class="font-weight-bold">Role</label>
+                </div>
+                <div class="col-sm-9">
+                    <select asp-for="RoleId" class="custom-select">
+                        <option value=""></option>
+                        @if (roles != null && roles.Any())
+                        {
+                            foreach (var role in roles)
+                            {
+                                <option value="@role.Id">@role.Name</option>
+                            }
+                        }
+                    </select>
+
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a class="btn btn-danger" asp-controller="User" asp-action="Index">Cancel</a>
+        </form>
+    </div>

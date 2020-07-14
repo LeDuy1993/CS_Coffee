@@ -1,0 +1,84 @@
+﻿
+@model ProductEditViewModel
+@{
+    ViewBag.Title = "Edit Product";
+    Layout = "_Layout1";
+    var avatarPath = $"/images/{(Model.AvatarPath ?? "fx.jpg")}";
+    var productTypes = ViewBag.ProductTypes as List<ProductType>;
+}
+<div class="col-sm-10 container pb-5 pt-3 border border-dark "  style="border-radius:5px;" >
+    <h2 class="pl-5 text-dark">Edit Product</h2>
+    <hr />
+    <form class="pl-5 text-white" enctype="multipart/form-data" asp-controller="Product" asp-action="Edit" method="post">
+        <input hidden asp-for="ProductId" />
+        <input hidden asp-for="AvatarPath" />
+        <div class="row form-group" style="width:75%">
+
+            <div class="col-sm-3">
+                <label asp-for="Name" class="font-weight-bold"></label>
+            </div>
+            <div class="col-sm-9">
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class=" text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-group" style="width:75%">
+
+            <div class="col-sm-3">
+                <label asp-for="Price" class="font-weight-bold"></label>
+            </div>
+            <div class="col-sm-9">
+                <input min="1000" max="1000000" asp-for="Price" class="form-control">
+                <span asp-validation-for="Price" class=" text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-group" style="width:75%">
+
+            <div class="col-sm-3">
+                <label asp-for="ProductTypeId" class="font-weight-bold"></label>
+            </div>
+            <div class="col-sm-9">
+                <select asp-for="ProductTypeId" class="custom-select">
+                    <option value="">ProductType</option>
+                    @if (productTypes != null)
+                    {
+                        foreach (var Pt in productTypes)
+                        {
+                            <option value="@Pt.ProductTypeId">@Pt.TypeName</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="ProductTypeId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-group" style="width:75%">
+            <div class="col-sm-3">
+                <label asp-for="Avatar" class="font-weight-bold"></label>
+            </div>
+            <div class="col-sm-9">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" asp-for="Avatar">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </div>
+        </div>
+        <div class="row col-5 offset-3" style="width:75%">
+            <img class="w-75 h-75" src="@avatarPath" id="avatar" asp-append-version="true" />
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">Update</button>
+        <a class="btn btn-danger  mt-2" asp-controller="Product" asp-action="Index">Cancel</a>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".custom-file-input").on("change", function () {
+                var fileName = $(this).val().split("\\").pop(); //this == ".custom-file-input";
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                $("#avatar").attr("src", window.URL.createObjectURL($(this)[0].files[0])); // "#avatar id ở thẻ img .
+            });
+        });
+
+    </script>
+}
