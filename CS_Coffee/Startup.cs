@@ -50,8 +50,11 @@ namespace CS_Coffee
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            // andasd
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
