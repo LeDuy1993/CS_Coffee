@@ -106,13 +106,29 @@ namespace CS_Coffee.Controllers
                 }
                 else
                 {
-                    return Redirect("https://localhost:44366/");
+                   
+                    return RedirectToAction("Index", "Home");
                 }
 
             }
             return View();
         }
-        [Authorize(Roles = "Boss,Leader,Staff")]
+        public IActionResult GetPartial(int id)
+        {
+            var products = productRepository.Gets().ToList();
+            if (id == 0)
+            {
+                return PartialView("_product", products);
+            }
+            else
+            {
+                var newproducts = products.FindAll(p => p.ProductTypeId == id).ToList();
+                return PartialView("_product", newproducts);
+            }
+          
+            
+        }
+        /*        [Authorize(Roles = "Boss,Leader,Staff")]*/
         [HttpGet]
         public IActionResult Edit(int id, string returnUrl)
         {
@@ -168,6 +184,7 @@ namespace CS_Coffee.Controllers
                 {
                     var url = "https://localhost:44366/Home/Index/" + model.OrderId;
                     return Redirect(url);
+                  
                 }
             }
             return View();
@@ -221,7 +238,7 @@ namespace CS_Coffee.Controllers
                         return View(creatOd);
                     }
                 }
-                return Redirect("https://localhost:44366/");
+                return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("AccessDenied", "Account");
         }
@@ -251,6 +268,7 @@ namespace CS_Coffee.Controllers
                 {
                     var url = "https://localhost:44366/Home/Index/" + model.TableId;
                     return Redirect(url);
+
                 }
 
 
@@ -283,6 +301,7 @@ namespace CS_Coffee.Controllers
                     {
                         var url = "https://localhost:44366/Home/Index/" + orderDetail.OrderId;
                         return Redirect(url);
+                     
                     }
                 }
             }
@@ -316,6 +335,7 @@ namespace CS_Coffee.Controllers
                 {
                     var url = "https://localhost:44366/Home/Index/" + id;
                     return Redirect(url);
+                
                 }
                 return View();
             }
@@ -354,8 +374,9 @@ namespace CS_Coffee.Controllers
                     var resultTo = orderRepository.Edit(orderTo);
                     if (resultTo != null && resultFrom != null)
                     {
-                        var url = "https://localhost:44366/Home/Index/" + pid;
+                        var url = "https://localhost:44366/Home/Index/" + id;
                         return Redirect(url);
+                      
                     }
                 }
                 return View();

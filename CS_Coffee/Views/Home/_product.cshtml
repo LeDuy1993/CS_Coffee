@@ -1,0 +1,19 @@
+﻿@model List<Product>
+@{
+    var selectedTable = ViewBag.TableID != null ? int.Parse(ViewBag.TableID.ToString()) : 0;
+}
+
+@foreach (var pro in Model)
+{
+    <div class="border border-dark  ml-2 mt-2  ">
+        <div style="background-image: url('/images/bia4.jpg');" class="card">
+            <img class="card-img-top" style="width:75px;height:75px" src="/images/@pro.AvatarPath" />
+            <a asp-controller="Home" asp-action="Order"
+               asp-route-id="@selectedTable"
+               asp-route-pid="@pro.ProductId"
+               class="align-self-center btn btn-block text-white font-weight-normal">
+                @pro.Name
+            </a>
+        </div>
+    </div>
+}

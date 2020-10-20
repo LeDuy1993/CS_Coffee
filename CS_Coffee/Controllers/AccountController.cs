@@ -47,10 +47,13 @@ namespace CS_Coffee.Controllers
                     lockoutOnFailure: false
                     );
                 var user = await userManager.FindByNameAsync(model.Email);
+
                 user.LockoutEnabled = false;
                 var result2 = await userManager.UpdateAsync(user);
+
                 if (result.Succeeded && result2.Succeeded)
                 {
+                    var role = userManager.GetRolesAsync(user); /// get role
                     if (!string.IsNullOrEmpty(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);

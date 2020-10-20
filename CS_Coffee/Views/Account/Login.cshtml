@@ -5,7 +5,9 @@
     Layout = "_Layout1";
 }
     <div class="col-sm-6 container pb-5 pt-3 " style="background-image: url('/images/bia4.jpg'); border-radius:5px;">
-        <h2  class="text-white pl-5 ">Login</h2>
+        <h2 class="text-white pl-5 ">Login</h2>
+        <h4 class="text-white pl-5 ">duyle@gmail.com</h4>
+        <h4 class="text-white pl-5 ">Asdf1234!</h4>
         <hr />
         <form class="pl-5 text-white" enctype="multipart/form-data" asp-controller="Account" asp-action="Login" method="post">
             <input hidden asp-for="ReturnUrl" value="@ViewBag.ReturnUrl" />
@@ -43,7 +45,7 @@
                 <div class="col-sm-3">
                     &nbsp;
                 </div>
-                <div  class="col-sm-9 text-danger" asp-validation-summary="All">
+                <div class="col-sm-9 text-danger" asp-validation-summary="All">
 
                 </div>
             </div>

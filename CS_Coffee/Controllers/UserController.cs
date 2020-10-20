@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace CS_Coffee.Controllers
 {
-    [Authorize(Roles="Boss")]
+    [Authorize(Roles = "Boss")]
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
