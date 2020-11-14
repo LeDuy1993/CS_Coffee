@@ -34,12 +34,13 @@ namespace CS_Coffee.Controllers
         }
 
 
-        public ViewResult Index(int id)
+        public IActionResult Index(int id, int? pageIndex, string search)
         {
-            var products = productRepository.Gets();
+            int pageSize = 3;
+            var products = productRepository.Gets(search);
             ViewBag.ProductTypes = GetProductTypes();
 
-            var types = GetProductTypes();
+            var types = GetProductTypes().ToList();
             var indexProducts = new List<ProductIndexViewModel>();
             if (id != 0)
             {
@@ -69,13 +70,14 @@ namespace CS_Coffee.Controllers
                                      TypeName = t.TypeName
                                  }).ToList();
             }
-            return View(indexProducts);
+            ViewBag.ListSearch = search;
+            return View(PaginatedList<ProductIndexViewModel>.Create(indexProducts,pageIndex ?? 1, pageSize));
         }
         [HttpGet]
         public IActionResult Create()
         {
             ViewBag.ProductTypes = GetProductTypes();            //1. Get Type
-            return View();
+            return PartialView("_Create");
         }
         [HttpPost]
         public IActionResult Create(ProductCreateViewModel model)
@@ -109,7 +111,7 @@ namespace CS_Coffee.Controllers
             }
         }
         [HttpGet]
-        public ViewResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             ViewBag.ProductTypes = GetProductTypes();
             var product = productRepository.Get(id);
@@ -126,7 +128,7 @@ namespace CS_Coffee.Controllers
                 ProductTypeId = product.ProductTypeId
 
             };
-            return View(editProduct);
+            return PartialView("_Edit",editProduct);
         }
         public IActionResult Edit(ProductEditViewModel model)
         {

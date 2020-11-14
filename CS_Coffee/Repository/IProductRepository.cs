@@ -9,7 +9,7 @@ namespace CS_Coffee.Repository
 {
     public interface IProductRepository
     {
-        IEnumerable<Product> Gets();
+        IEnumerable<Product> Gets(string search = null);
         Product Get(int id);
         Product Create(Product model);
         Product Edit(Product employee);

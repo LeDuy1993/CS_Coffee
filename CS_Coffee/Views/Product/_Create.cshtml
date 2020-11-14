@@ -1,0 +1,63 @@
+﻿@model ProductCreateViewModel
+@{
+    var productTypes = ViewBag.ProductTypes as List<ProductType>;
+}
+
+  
+    <form class="pl-5 text-black" enctype="multipart/form-data" asp-controller="Product" asp-action="Create" method="post">
+        <div class="row form-group" style="width:75%">
+
+            <div class="col-sm-3">
+                <label asp-for="Name" class="font-italic"></label>
+            </div>
+            <div class="col-sm-9">
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name" class=" text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group" style="width:75%">
+
+            <div class="col-sm-3">
+                <label asp-for="ProductTypeId" class="font-italic"></label>
+            </div>
+            <div class="col-sm-9">
+                <select asp-for="ProductTypeId" class="custom-select">
+                    <option value="">ProductType</option>
+                    @if (productTypes != null)
+                    {
+                        foreach (var Pt in productTypes)
+                        {
+                            <option value="@Pt.ProductTypeId">@Pt.TypeName</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="ProductTypeId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row form-group" style="width:75%">
+
+            <div class="col-sm-3">
+                <label asp-for="Price" class="font-italic"></label>
+            </div>
+            <div class="col-sm-9">
+                <input asp-for="Price" class="form-control">
+                <span asp-validation-for="Price" class=" text-danger"></span>
+            </div>
+        </div>
+        <div class="row form-group" style="width:75%">
+            <div class="col-sm-3">
+                <label asp-for="Avatar"></label>
+            </div>
+            <div class="col-sm-9">
+                <div class="custom-file">
+                    <input class="custom-file-input" asp-for="Avatar">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a class="btn btn-danger" asp-controller="Product" asp-action="Index">Cancel</a>
+    </form>

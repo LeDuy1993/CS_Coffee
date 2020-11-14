@@ -163,11 +163,10 @@
             </div>
             <div class="row container btn-group mt-2 ">
                 <a class="btn btn-dark text-white ml-2"
-                  @* asp-controller="Home" asp-action="Index"
+                   @* asp-controller="Home" asp-action="Index"
                    asp-route-id="@selectedTable"
                    asp-route-pid="0"*@
                    href="javascript:;" onclick="showProduct(0)">
-
                     All
                 </a>
                 @foreach (var type in productTypes)
@@ -184,7 +183,29 @@
                 }
             </div>
             <div class="row container ml-4" id="search">
-         @*       @Html.PartialAsync("_product")*@
+                @* @if (producs == null)
+        {
+            @Html.PartialAsync("_product")
+        }
+        else
+        {
+
+        }*@
+                @foreach (var product in producs)
+                {
+                    <div class="border border-dark  ml-2 mt-2  ">
+                        <div style="background-image: url('/images/bia4.jpg');" class="card">
+                            <img class="card-img-top" style="width:75px;height:75px" src="/images/@product.AvatarPath" />
+                            <a asp-controller="Home" asp-action="Order"
+                               asp-route-id="@selectedTable"
+                               asp-route-pid="@product.ProductId"
+                               class="align-self-center btn btn-block text-white font-weight-normal">
+                                @product.Name
+                            </a>
+                        </div>
+                    </div>
+                }
+
             </div>
         </div>
     </div>
@@ -220,6 +241,13 @@
             showProduct = function (id) {
                 console.log(id);
                 $("#search").load(`/Home/GetPartial/${id}`);
+            @*    $.ajax({
+                    url: `/Home/GetPartial/${id}`,
+                    method: "GET",
+                    success: function (data) {
+                        $('#search').html(data);
+                    }
+                });*@
             }
         });
     </script>

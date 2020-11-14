@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<ProductIndexViewModel>
+@model PaginatedList<ProductIndexViewModel>
 @{
     Layout = "_LayoutDashBoard";
     ViewBag.Title = "Product list";
@@ -7,7 +7,18 @@
     var count = 1;
 }
 <div class="container-fluid ">
-    <a asp-controller="Product" asp-action="Create" class="btn btn-warning mb-2"> Create Product <i class="fa fa-plus"></i></a>
+    <a id="Create" class="btn btn-warning mb-2"> Create Product <i class="fa fa-plus"></i></a>
+    <div class="searchuser col-lg-7 col-md-6">
+        <form asp-action="Index"  method="put">
+            <div class="form-actions form-inline">
+                <input class="searchTerm" type="text" name="Search" id="SearchString" value="@ViewData["ListSearch"]" placeholder="Search..." />
+                <button type="submit" class="searchButton" value="Search">
+                    <i class="fa fa-search" style="color: #212529"></i>
+                </button> &nbsp;
+                <a asp-action="Index" class="btn btn-lg btn-outline-success" style="border-radius: 8px; font-size: 18px"><i class="fas fa-undo-alt" style="font-size: 15px"></i></a>
+            </div>
+        </form>
+    </div>
     <table id="dtBasicExample" class="table table-striped table-hover table-bordered">
         <thead class="thead-dark">
             <tr>
@@ -34,7 +45,7 @@
                         <td>@product.Price.ToString("#,##0")</td>
                         <td> <img style="width:75px;height:75px" src="@avatarPath" class="card-img-top myImage" asp-append-version="true" /></td>
                         <td class="text-center ">
-                            <a class="btn btn-warning" asp-controller="Product" asp-action="Edit" asp-route-id="@product.ProductId"><i class="fa fa-edit" style="font-size:24px;"></i></a>
+                            <a class="btn btn-warning" onclick="edit(@product.ProductId)"><i class="fa fa-edit" style="font-size:24px;"></i></a>
                             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash-o" style="font-size:24px"></i></button>
                             @*Modal View Delete Product*@
                             <div class="modal" id="myModal">
@@ -45,7 +56,7 @@
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
                                         <div class="modal-header">
-                                           
+
                                             <h6> Delete this product : @product.Name</h6>
                                         </div>
                                         <div class="modal-footer">
@@ -62,15 +73,80 @@
             }
 
         </tbody>
-
     </table>
 </div>
 
+<div class=" row align-items-center justify-content-center p-15">
+    @{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : ""; }
+    <div class="form-check-inline">
+        <a asp-action="Index"
+           asp-route-pageIndex="@(Model.PageIndex - 1)"
+           asp-route-search="@(ViewBag.ListSearch)"
+           class="btn btn-outline-primary form-control  @prevDisabled" style="background-color: #66b794">
+            Previous
+        </a>
+        <input id="pageIndexToGo" placeholder="@Model.PageIndex / @Model.TotalPages" class="text-center form-control input-lg" onchange="GoToLink(this.value)" style="font-weight: 100" />
+        <a asp-action="Index"
+           asp-route-pageIndex="@(Model.PageIndex + 1)"
+           asp-route-search="@(ViewBag.ListSearch)"
+           class="btn btn-outline-primary form-control @nextDisabled" style="background-color: #66b794">
+            Next
+        </a>
+    </div>
+
+
+
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                @*Modal body*@
+            </div>
+        </div>
+    </div>
+</div>
 @section Scripts{
     <script>
-        $(document).ready(function () {
-            $('#dtBasicExample').DataTable();
-            $('.dataTables_length').addClass('bs-select');
-        });
+        //$(document).ready(function () {
+        //    $('#dtBasicExample').DataTable();
+        //    $('.dataTables_length').addClass('bs-select');
+        //});
+
     </script>
 }
+<script>
+    $('#Create').on("click", function () {
+        $("#exampleModalLabel").text("Create Task");
+        $.ajax({
+            method: 'get',
+            url: `Product/Create`,
+            success: function (result) {
+                // Sau khi tra ve patialview ta gán giá trị cho phần nội dung của popup
+                $("#modal-body").html(result);
+            }
+        });
+        $('#exampleModal').appendTo("body");
+        $('#exampleModal').modal('show');
+    });
+    edit = function (id) {
+        $("#exampleModalLabel").text("Task Detail");
+        $.ajax({
+            method: 'get',
+            url: `/Product/Edit/${id}`,
+            success: function (result) {
+                $("#modal-body").html(result);
+            }
+        });
+        $('#exampleModal').appendTo("body");
+        $("#exampleModal").modal('show');
+    };
+</script>

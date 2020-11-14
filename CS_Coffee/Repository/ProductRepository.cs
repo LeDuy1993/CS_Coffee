@@ -55,9 +55,18 @@ namespace CS_Coffee.Repository
             return context.Products.Find(id);
         }
 
-        public IEnumerable<Product> Gets()
+        public IEnumerable<Product> Gets(string search = null)
         {
-            return context.Products;
+            if (String.IsNullOrWhiteSpace(search))
+            {
+                return context.Products;
+            }
+            else
+            {
+                search = search.Trim(' ');
+                return context.Products.Where(p => p.Name.Contains(search) 
+                                                || p.Price.ToString().Contains(search));
+            }
         }
     }
 }
