@@ -1,0 +1,36 @@
+﻿@model List<Order>
+@{
+    var selectedTable = ViewBag.TableID != null ? int.Parse(ViewBag.TableID.ToString()) : 0;
+    var countTable = 0;
+}
+
+@foreach (var table in Model)
+{
+    countTable = countTable + 1;
+
+    @if (@table.Using)
+    {
+        <div class="card border border-dark  ml-3 mt-3 mb-3 " style="border-radius:2px;">
+            <div style="background-color:forestgreen" class="card border border-dark">
+                <img class="card-img-top" style="width:75px;height:75px" src="/images/ban2.jpg" />
+                <a asp-controller="Home" asp-action="Index" asp-route-id="@table.OrderId"
+                   class="align-self-center btn btn-block text-white font-weight-bold">
+                    @table.OrderId
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="border border-dark  ml-3 mt-3 mb-3" style="border-radius:2px;">
+            <div style="background-color:red" class="card border border-dark">
+                <img class="card-img-top" style="width:75px;height:75px" src="/images/table1.png" />
+                <a asp-controller="Home" asp-action="Index" asp-route-id="@table.OrderId"
+                   class="align-self-center btn btn-block text-white font-weight-bold">
+                    @table.OrderId
+                </a>
+            </div>
+        </div>
+    }
+
+}

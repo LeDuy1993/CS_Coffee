@@ -17,36 +17,7 @@
     <h3 class="text-dark">Tables </h3>
     <hr class="bg-dark">
     <div class="row container">
-        @foreach (var table in tables)
-        {
-            countTable = countTable + 1;
-
-            @if (@table.Using)
-            {
-                <div class="card border border-dark  ml-3 mt-3 mb-3 " style="border-radius:2px;">
-                    <div style="background-color:forestgreen" class="card border border-dark">
-                        <img class="card-img-top" style="width:75px;height:75px" src="/images/ban2.jpg" />
-                        <a asp-controller="Home" asp-action="Index" asp-route-id="@table.OrderId"
-                           class="align-self-center btn btn-block text-white font-weight-bold">
-                            @table.OrderId
-                        </a>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="border border-dark  ml-3 mt-3 mb-3" style="border-radius:2px;">
-                    <div style="background-color:red" class="card border border-dark">
-                        <img class="card-img-top" style="width:75px;height:75px" src="/images/table1.png" />
-                        <a asp-controller="Home" asp-action="Index" asp-route-id="@table.OrderId"
-                           class="align-self-center btn btn-block text-white font-weight-bold">
-                            @table.OrderId
-                        </a>
-                    </div>
-                </div>
-            }
-
-        }
+       @await Html.PartialAsync("_Table", tables);
     </div>
     <hr class="bg-dark">
     <div class="row first">
@@ -163,18 +134,13 @@
             </div>
             <div class="row container btn-group mt-2 ">
                 <a class="btn btn-dark text-white ml-2"
-                   @* asp-controller="Home" asp-action="Index"
-                   asp-route-id="@selectedTable"
-                   asp-route-pid="0"*@
                    href="javascript:;" onclick="showProduct(0)">
                     All
                 </a>
                 @foreach (var type in productTypes)
                 {
                     <a class="btn btn-dark text-white ml-1"
-                       @*asp-controller="Home" asp-action="Index"
-                       asp-route-id="@selectedTable"
-                       asp-route-pid="@type.ProductTypeId"*@
+
                        href="javascript:;" onclick="showProduct(@type.ProductTypeId)">
 
                         @type.TypeName
@@ -183,29 +149,7 @@
                 }
             </div>
             <div class="row container ml-4" id="search">
-                @* @if (producs == null)
-        {
-            @Html.PartialAsync("_product")
-        }
-        else
-        {
-
-        }*@
-                @foreach (var product in producs)
-                {
-                    <div class="border border-dark  ml-2 mt-2  ">
-                        <div style="background-image: url('/images/bia4.jpg');" class="card">
-                            <img class="card-img-top" style="width:75px;height:75px" src="/images/@product.AvatarPath" />
-                            <a asp-controller="Home" asp-action="Order"
-                               asp-route-id="@selectedTable"
-                               asp-route-pid="@product.ProductId"
-                               class="align-self-center btn btn-block text-white font-weight-normal">
-                                @product.Name
-                            </a>
-                        </div>
-                    </div>
-                }
-
+                @await Html.PartialAsync("_product", producs);
             </div>
         </div>
     </div>
